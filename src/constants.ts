@@ -20,6 +20,8 @@ export const correctCombinations = [
   [1, 3, 9, 5, 0, 7],
 ];
 
+export const correctCombination = [1, 0, 2, 9, 3, 8];
+
 // import { useRef } from 'react';
 // import { Howl } from 'howler';
 // import two from './assets/audios/2-21-male-291.wav';

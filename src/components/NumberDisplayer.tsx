@@ -10,7 +10,7 @@ const NumberDisplayer = ({ number = '' }: NumberDisplayerProps) => {
       bg='red.100'
       borderBottom='4px solid'
       borderColor='red.300'
-      w='4rem'
+      w='5rem'
       h='2rem'
       justify='center'
       align='center'
