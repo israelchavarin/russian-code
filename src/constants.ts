@@ -1,3 +1,14 @@
+import zero from './assets/audios/0-21-male-15.wav';
+import one from './assets/audios/1-21-male-129.wav';
+import two from './assets/audios/2-21-male-291.wav';
+import three from './assets/audios/3-21-male-434.wav';
+import four from './assets/audios/4-23-male-9054.wav';
+import five from './assets/audios/5-21-male-8178.wav';
+import six from './assets/audios/6-21-male-786.wav';
+import seven from './assets/audios/7-21-male-903.wav';
+import eight from './assets/audios/8-21-male-1024.wav';
+import nine from './assets/audios/9-21-male-1177.wav';
+
 export const numbers = [
   { text: 'один', pronunciation: 'odin', value: 1 },
   { text: 'два', pronunciation: 'dva', value: 2 },
@@ -13,50 +24,46 @@ export const numbers = [
 ];
 
 export const correctCombinations = [
-  [5, 0, 7, 6, 9, 2],
-  [2, 6, 1, 9, 5, 4],
-  [7, 9, 2, 0, 6, 1],
-  [3, 6, 1, 9, 4, 2],
-  [1, 3, 9, 5, 0, 7],
+  [
+    { audio: five, value: 5 },
+    { audio: zero, value: 0 },
+    { audio: seven, value: 7 },
+    { audio: six, value: 6 },
+    { audio: nine, value: 9 },
+    { audio: two, value: 2 },
+  ],
+  [
+    { audio: two, value: 2 },
+    { audio: six, value: 6 },
+    { audio: one, value: 1 },
+    { audio: nine, value: 9 },
+    { audio: five, value: 5 },
+    { audio: four, value: 4 },
+  ],
+  [
+    { audio: seven, value: 7 },
+    { audio: nine, value: 9 },
+    { audio: two, value: 2 },
+    { audio: zero, value: 0 },
+    { audio: six, value: 6 },
+    { audio: one, value: 1 },
+  ],
+  [
+    { audio: three, value: 3 },
+    { audio: six, value: 6 },
+    { audio: one, value: 1 },
+    { audio: nine, value: 9 },
+    { audio: four, value: 4 },
+    { audio: eight, value: 8 },
+  ],
+  [
+    { audio: one, value: 1 },
+    { audio: three, value: 3 },
+    { audio: nine, value: 9 },
+    { audio: five, value: 5 },
+    { audio: zero, value: 0 },
+    { audio: seven, value: 7 },
+  ],
 ];
 
 export const correctCombination = [1, 0, 2, 9, 3, 8];
-
-// import { useRef } from 'react';
-// import { Howl } from 'howler';
-// import two from './assets/audios/2-21-male-291.wav';
-// import four from './assets/audios/4-23-male-9054.wav';
-// import seven from './assets/audios/7-21-male-903.wav';
-
-// const soundsRef = useRef<Howl[]>([]);
-
-// const soundFiles = [two, four, seven];
-
-// const preloadSounds = () => {
-//   // Clear and reinitialize sounds
-//   soundsRef.current = soundFiles.map(src => {
-//     return new Howl({
-//       src: [src],
-//       preload: true,
-//     });
-//   });
-// };
-
-// const playSequentiallyWithPause = (index = 0) => {
-//   if (index >= soundsRef.current.length) return;
-
-//   const currentSound = soundsRef.current[index];
-//   currentSound.play();
-
-//   currentSound.once('end', () => {
-//     setTimeout(() => {
-//       playSequentiallyWithPause(index + 1);
-//     }, 500); // 0.5s pause between sounds
-//   });
-// };
-
-// const handleClick = () => {
-//   // iOS Safari requires sounds to be loaded and triggered after user interaction
-//   preloadSounds();
-//   playSequentiallyWithPause(0);
-// };

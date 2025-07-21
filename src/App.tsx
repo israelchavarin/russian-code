@@ -3,14 +3,17 @@ import DialPad from './components/DialPad';
 import { useEffect, useState } from 'react';
 import NumberDisplayer from './components/NumberDisplayer';
 import type { NumberObjet } from './interfaces';
-import { correctCombination } from './constants';
 import peace from './assets/images/peace.gif';
 import explosion from './assets/images/explosion.gif';
+import SoundsPlayer from './components/SoundsPlayer';
+import { correctCombinations } from '@/constants';
 
 const App = () => {
   const [enteredNumbers, setEnteredNumbers] = useState<NumberObjet[]>([]);
   const [attemptNumber, setAttemptNumber] = useState(1);
   const [result, setResult] = useState<'success' | 'failure' | ''>('');
+  const [correctCombination, setCorrectCombination] = useState<number[]>([]);
+  const [audioFiles, setAudioFiles] = useState<string[]>([]); // new state
   const numberValues = enteredNumbers.map(n => n.value);
 
   let redShadowToUse = '#FF6666';
@@ -26,6 +29,13 @@ const App = () => {
   };
 
   useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * 5);
+    const selected = correctCombinations[randomIndex];
+    setCorrectCombination(selected.map(item => item.value));
+    setAudioFiles(selected.map(item => item.audio));
+  }, []);
+
+  useEffect(() => {
     if (numberValues.length === 6) {
       if (areArraysEqual(numberValues, correctCombination)) {
         setResult('success');
@@ -38,10 +48,9 @@ const App = () => {
         }
       }
     }
-  }, [numberValues, attemptNumber]);
+  }, [numberValues, attemptNumber, correctCombination]);
 
   return (
-    // main container
     <Flex
       flexDir='column'
       height='100dvh'
@@ -50,12 +59,10 @@ const App = () => {
       bg='black'
     >
       {result === 'success' && <Image src={peace} />}
-
       {result === 'failure' && <Image src={explosion} />}
 
       {!result && (
         <>
-          {/* screen container */}
           <Flex
             flexDir='column'
             flex={1}
@@ -81,9 +88,10 @@ const App = () => {
               <NumberDisplayer number={enteredNumbers[4]?.text} />
               <NumberDisplayer number={enteredNumbers[5]?.text} />
             </Flex>
+
+            <SoundsPlayer audioFiles={audioFiles} />
           </Flex>
 
-          {/* numbers container */}
           <Flex flex={1}>
             <DialPad setEnteredValues={setEnteredNumbers} />
           </Flex>
