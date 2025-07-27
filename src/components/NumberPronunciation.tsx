@@ -32,9 +32,9 @@ const NumberPronunciation = ({
       <Text fontSize='1rem' userSelect='none'>
         {number.text}
       </Text>
-      {/* <Text fontSize='.875rem' userSelect='none'>
+      <Text fontSize='.875rem' userSelect='none'>
         ({number.pronunciation})
-      </Text> */}
+      </Text>
     </Flex>
   );
 };

@@ -5,9 +5,10 @@ import cassette from '../assets/images/cassette.png';
 
 interface SoundsPlayerProps {
   audioFiles: string[];
+  onClick: () => void;
 }
 
-const SoundsPlayer = ({ audioFiles }: SoundsPlayerProps) => {
+const SoundsPlayer = ({ audioFiles, onClick }: SoundsPlayerProps) => {
   const soundsRef = useRef<Howl[]>([]);
 
   const stopAndUnloadSounds = () => {
@@ -45,16 +46,11 @@ const SoundsPlayer = ({ audioFiles }: SoundsPlayerProps) => {
     stopAndUnloadSounds(); // 🔁 stop any previous sounds
     preloadSounds(); // 📦 preload fresh
     playSequentiallyWithPause(); // ▶️ start from beginning
+    onClick();
   };
 
   return (
-    <Image
-      mt='1rem'
-      src={cassette}
-      w='6rem'
-      cursor='pointer'
-      onClick={handleClick}
-    />
+    <Image src={cassette} w='6rem' cursor='pointer' onClick={handleClick} />
   );
 };
 
