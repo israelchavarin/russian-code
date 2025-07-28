@@ -6,8 +6,8 @@ import type { NumberObjet } from './interfaces';
 import explosion from './assets/images/explosion.gif';
 import SoundsPlayer from './components/SoundsPlayer';
 import { correctCombinations } from '@/constants';
-import CountdownTimer from './components/CountDownTimer';
 import ConfettiBurst from './components/ConfettiBurst';
+import CountdownTimer from './components/CountdownTimer';
 
 const App = () => {
   const [enteredNumbers, setEnteredNumbers] = useState<NumberObjet[]>([]);
