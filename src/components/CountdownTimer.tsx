@@ -4,20 +4,30 @@ import { Text } from '@chakra-ui/react';
 interface CountdownTimerProps {
   seconds: number;
   isRunning: boolean;
+  shouldStop?: boolean;
   onComplete?: () => void;
+  onStop?: (remainingSeconds: number) => void;
 }
 
 const CountdownTimer = ({
   seconds,
   isRunning,
+  shouldStop,
   onComplete,
+  onStop,
 }: CountdownTimerProps) => {
   const [timeLeft, setTimeLeft] = useState(seconds);
   const intervalRef = useRef<number | null>(null);
   const hasCompleted = useRef(false);
 
+  // Start or Resume
   useEffect(() => {
-    if (isRunning && timeLeft > 0 && intervalRef.current === null) {
+    if (
+      isRunning &&
+      !shouldStop &&
+      timeLeft > 0 &&
+      intervalRef.current === null
+    ) {
       intervalRef.current = window.setInterval(() => {
         setTimeLeft(prev => {
           const nextTime = prev - 1;
@@ -28,7 +38,7 @@ const CountdownTimer = ({
 
             if (!hasCompleted.current) {
               hasCompleted.current = true;
-              onComplete?.(); // Call external function
+              onComplete?.();
             }
 
             return 0;
@@ -45,21 +55,27 @@ const CountdownTimer = ({
         intervalRef.current = null;
       }
     };
-  }, [isRunning, timeLeft, onComplete]);
+  }, [isRunning, shouldStop, timeLeft, onComplete]);
 
+  // Stop logic
   useEffect(() => {
-    // Reset hasCompleted when timer is reset
+    if (shouldStop && intervalRef.current !== null) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+      onStop?.(timeLeft);
+    }
+  }, [shouldStop, onStop, timeLeft]);
+
+  // Reset completed state if countdown restarts
+  useEffect(() => {
     if (!isRunning) {
       hasCompleted.current = false;
-      setTimeLeft(seconds);
     }
-  }, [isRunning, seconds]);
+  }, [isRunning]);
 
   // Format MM:SS
-  const minutesDisplay = Math.floor(timeLeft / 60)
-    .toString()
-    .padStart(2, '0');
-  const secondsDisplay = (timeLeft % 60).toString().padStart(2, '0');
+  const minutesDisplay = String(Math.floor(timeLeft / 60)).padStart(2, '0');
+  const secondsDisplay = String(timeLeft % 60).padStart(2, '0');
 
   return (
     <Text fontSize='4xl' fontWeight='bold' color='red'>

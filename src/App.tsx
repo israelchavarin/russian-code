@@ -3,11 +3,11 @@ import DialPad from './components/DialPad';
 import { useEffect, useState } from 'react';
 import NumberDisplayer from './components/NumberDisplayer';
 import type { NumberObjet } from './interfaces';
-import peace from './assets/images/peace.gif';
 import explosion from './assets/images/explosion.gif';
 import SoundsPlayer from './components/SoundsPlayer';
 import { correctCombinations } from '@/constants';
 import CountdownTimer from './components/CountDownTimer';
+import ConfettiBurst from './components/ConfettiBurst';
 
 const App = () => {
   const [enteredNumbers, setEnteredNumbers] = useState<NumberObjet[]>([]);
@@ -16,6 +16,8 @@ const App = () => {
   const [correctCombination, setCorrectCombination] = useState<number[]>([]);
   const [audioFiles, setAudioFiles] = useState<string[]>([]);
   const [timeRunning, setTimeRunning] = useState(false);
+  const [shouldStop, setShouldStop] = useState(false);
+
   const numberValues = enteredNumbers.map(n => n.value);
 
   let redShadowToUse = '#FF6666';
@@ -47,6 +49,7 @@ const App = () => {
     if (numberValues.length === 6) {
       if (areArraysEqual(numberValues, correctCombination)) {
         setResult('success');
+        setShouldStop(true);
       } else {
         if (attemptNumber === 3) {
           setResult('failure');
@@ -66,10 +69,26 @@ const App = () => {
       mx='auto'
       bg='black'
     >
-      {result === 'success' && <Image src={peace} />}
-      {result === 'failure' && <Image src={explosion} />}
+      {/* success screen */}
+      {/* {result === 'success' && (
+        <Center h='100%'>
+          <Image src={peace} />
+          <ConfettiBurst
+            active={result === 'success'}
+            duration={5000}
+            interval={400}
+          />
+        </Center>
+      )} */}
 
-      {!result && (
+      {/* failure screen */}
+      {result === 'failure' && (
+        <Center h='100%'>
+          <Image src={explosion} />
+        </Center>
+      )}
+
+      {result !== 'failure' && (
         <>
           {/* the screen */}
           <Flex
@@ -103,8 +122,9 @@ const App = () => {
 
             <Center w='100%' mt='1rem' columnGap='2rem'>
               <CountdownTimer
-                seconds={30} // 5min === 300
+                seconds={300} // 5min === 300
                 isRunning={timeRunning}
+                shouldStop={shouldStop}
                 onComplete={() => setResult('failure')}
               />
 
@@ -117,6 +137,12 @@ const App = () => {
           <Flex flex={1}>
             <DialPad setEnteredValues={setEnteredNumbers} />
           </Flex>
+
+          <ConfettiBurst
+            active={result === 'success'}
+            duration={10000}
+            interval={1000}
+          />
         </>
       )}
     </Flex>

@@ -2,10 +2,10 @@ import zero from './assets/audios/0-21-male-15.wav';
 import one from './assets/audios/1-21-male-129.wav';
 import two from './assets/audios/2-21-male-291.wav';
 import three from './assets/audios/3-21-male-434.wav';
-import four from './assets/audios/4-23-male-9054.wav';
+import four from './assets/audios/4-21-male-552.wav';
 import five from './assets/audios/5-21-male-8178.wav';
 import six from './assets/audios/6-21-male-786.wav';
-import seven from './assets/audios/7-21-male-903.wav';
+import seven from './assets/audios/7-21-male-944.wav';
 import eight from './assets/audios/8-21-male-1024.wav';
 import nine from './assets/audios/9-21-male-1177.wav';
 
